@@ -52,7 +52,8 @@ First, download the required data from Google Drive and place it into the `data`
 
 - sc data: https://drive.google.com/file/d/1TywXKtjBq6UYGxlWW9NFRybd1Sfznwhb/view?usp=sharing
 
-- Others intermediate files: e.g. SVG list (svg-enhanced-scc.csv from [data folder](https://github.com/zhangzheng0131/SCAD/blob/main/data/mapping_SCC.txt)) and the google drive folder : https://drive.google.com/file/d/1f1xCALl_eUZ49eq5kQrzdsSNafgN2NcB/view?usp=sharing 
+- Others intermediate files: e.g. SVG list (svg-enhanced-scc.csv from [data folder](https://github.com/zhangzheng0131/SCAD/blob/main/data/mapping_SCC.txt)) and the google drive folder : https://drive.google.com/file/d/1f1xCALl_eUZ49eq5kQrzdsSNafgN2NcB/view?usp=sharing
+- Note that these data is also availiable at Zenodo: https://zenodo.org/records/21821066.
 
 ### 3. Run the pipeline example 
 
@@ -267,7 +268,7 @@ print("All results saved successfully.")
 
 ## Benchmarking on Simulated Data
 
-We provide a comprehensive tutorial for benchmarking our method against baseline approaches on simulated data. The tutorial includes the complete code for all compared methods, along with a dedicated notebook for performance evaluation.
+We provide a comprehensive tutorial for benchmarking our method against baseline approaches on simulated data. The tutorial includes the complete code for all compared methods, along with a dedicated notebook for performance evaluation. The related data is availiable at: https://zenodo.org/records/21821066.
 
 ### Tutorial Files
 
