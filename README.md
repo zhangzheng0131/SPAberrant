@@ -1,5 +1,7 @@
 
-# SCAD: Spatially Conformal Aberrant Detection
+# SPAberrant: Detection of Spatially Aberrant Cells in Spatial Transcriptomics Data by Conformal Prediction
+<img width="432" height="62" alt="image" src="https://github.com/user-attachments/assets/5c450211-10bf-45aa-b544-825237d80dc2" />
+
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/)
@@ -8,8 +10,8 @@
 
 ![Pipeline](fig/pipeline.png)
 
-**SCAD** is a computational framework designed to integrate single-cell RNA sequencing (scRNA-seq) and spatial transcriptomics (ST) data to quantitatively characterize and detect spatially aberrant cells. SCAD integrates scRNA-seq and spatial transcriptomics (ST) data through two independent autoencoders to generate latent embeddings for cells and spatial spots. Cell embeddings are modeled as cluster-aware latent representations using a Gaussian mixture model (GMM), where each component represents a distinct cell-type embedding. Each spot embedding is then decomposed into a weighted combination of GMM component centers, reflecting its underlying cellular composition. 
-SCAD further learns a spatial mapping from ST embeddings to their physical coordinates, enabling reconstruction of tissue architecture. Spatially aberrant spots are subsequently identified as outliers in this mapping using an uncertainty quantification framework.
+**SPAberrant** is a computational framework designed to integrate single-cell RNA sequencing (scRNA-seq) and spatial transcriptomics (ST) data to quantitatively characterize and detect spatially aberrant cells. SPAberrant integrates scRNA-seq and spatial transcriptomics (ST) data through two independent autoencoders to generate latent embeddings for cells and spatial spots. Cell embeddings are modeled as cluster-aware latent representations using a Gaussian mixture model (GMM), where each component represents a distinct cell-type embedding. Each spot embedding is then decomposed into a weighted combination of GMM component centers, reflecting its underlying cellular composition. 
+SPAberrant further learns a spatial mapping from ST embeddings to their physical coordinates, enabling reconstruction of tissue architecture. Spatially aberrant spots are subsequently identified as outliers in this mapping using an uncertainty quantification framework.
 1.  **Joint Embedding:** Mapping scRNA-seq cells and ST spots into a shared latent space using a VAE.
 2.  **Deconvolution:** Modeling ST spots as a weighted combination of cell-type embeddings (GMM components) to mitigate batch effects.
 3.  **Spatial Mapping:** Learning a mapping from latent embeddings to physical coordinates.
@@ -17,27 +19,27 @@ SCAD further learns a spatial mapping from ST embeddings to their physical coord
 
 ## ✨ Key Features
 
-*   **Uncertainty-Calibrated Detection:** Unlike methods relying on arbitrary thresholds, SCAD uses conformal prediction to provide statistically principled detection with controlled false discovery rates.
+*   **Uncertainty-Calibrated Detection:** Unlike methods relying on arbitrary thresholds, SPAberrant uses conformal prediction to provide statistically principled detection with controlled false discovery rates.
 *   **Integration:** Seamlessly integrates scRNA-seq and Spatial Transcriptomics data.
 
 ## 🛠️ Installation
 
-To run SCAD, you will need Python (3.8+) and the following dependencies:
+To run SPAberrant, you will need Python (3.8+) and the following dependencies:
 - Python ≥ 3.8
 - PyTorch ≥ 1.10
 - Scanpy, anndata, pandas, numpy, scikit‑learn, scipy 
 
 ### Install from source
 ```bash
-git clone https://github.com/zhangzheng0131/SCAD.git
-cd SCAD
+git clone https://github.com/zhangzheng0131/SPAberrant.git
+cd SPAberrant
 pip install -r requirements.txt
 ```
 ---
 
 ## 🚀 Quick Start
 
-A complete example script `run_scad.ipynb` is provided in the repository. It demonstrates the full pipeline on  human squamous cell carcinoma (SCC) data.
+A complete example script `run_SPAberrant.ipynb` is provided in the repository. It demonstrates the full pipeline on  human squamous cell carcinoma (SCC) data.
 
 ### 1. Prepare your data
 - **scRNA‑seq**: AnnData object (cells × genes) with `.X` as expression matrix.
@@ -45,14 +47,14 @@ A complete example script `run_scad.ipynb` is provided in the repository. It dem
 - **SVG list**: A list of spatially variable genes (e.g., from SpaGCN) to guide feature selection.
 
 ### 2. Configure paths
-Edit the configuration section in `run_scad.ipynb`:
+Edit the configuration section in `run_SPAberrant.ipynb`:
 
 First, download the required data from Google Drive and place it into the `data` folder.
 - ST data (adata_SCC_ST.h5ad): https://drive.google.com/file/d/1lk-un3yXyT4cM8gNCRcWE5ujgi5KHn6W/view?usp=sharing
 
 - sc data: https://drive.google.com/file/d/1TywXKtjBq6UYGxlWW9NFRybd1Sfznwhb/view?usp=sharing
 
-- Others intermediate files: e.g. SVG list (svg-enhanced-scc.csv from [data folder](https://github.com/zhangzheng0131/SCAD/blob/main/data/mapping_SCC.txt)) and the google drive folder : https://drive.google.com/file/d/1f1xCALl_eUZ49eq5kQrzdsSNafgN2NcB/view?usp=sharing
+- Others intermediate files: e.g. SVG list (svg-enhanced-scc.csv from [data folder](https://github.com/zhangzheng0131/SPAberrant/blob/main/data/mapping_SCC.txt)) and the google drive folder : https://drive.google.com/file/d/1f1xCALl_eUZ49eq5kQrzdsSNafgN2NcB/view?usp=sharing
 - Note that these data is also availiable at Zenodo: https://zenodo.org/records/21821066.
 
 ### 3. Run the pipeline example 
@@ -62,7 +64,7 @@ This will:
  1. Preprocess 
 -  (1) using TESLA to get ST data with higher resolution (see example in tutorial_TESLA.ipynb, generaing enhanced_exp.h5ad and extracting the original spots enhanced_mapping.h5ad)
 -  (2) using SpaGCN to obtain spatial variable genes (see example in tutorial_SpaGCN.ipynb, generating svg-enhanced-scc.csv)
-2. Train the VAE‑GMM model (step 2 to 5 is in run_scad.ipynb)
+2. Train the VAE‑GMM model (step 2 to 5 is in run_SPAberrant.ipynb)
 3. Predict spatial coordinates for each spot
 4. Apply conformal prediction to detect aberrant spots
 5. Save results (predicted coordinates, aberrant labels, deconvolution scores, latent embeddings) 
@@ -75,7 +77,7 @@ This will:
 
 ### Model Training and Conformal Prediction Pipeline
 
-This section outlines the complete workflow for training the SCAD models across three cross-validation folds, performing conformal prediction, and aggregating the final results.
+This section outlines the complete workflow for training the SPAberrant models across three cross-validation folds, performing conformal prediction, and aggregating the final results.
 
 #### Training Fold 1
 Initialize the model with specified hyperparameters, train on the first split of indices, evaluate to extract latent variables, and save the network parameters.
@@ -83,7 +85,7 @@ Initialize the model with specified hyperparameters, train on the first split of
 ```python
 # %% Cell 2 - Train Model Fold 1
 print("=== Training Fold 1 ===")
-model1 = scad.Model3(
+model1 = SPAberrant.Model3(
     resolution="low",
     batch_size=200,
     train_epoch=3000,
@@ -125,7 +127,7 @@ Train the second fold using the identical architecture and hyperparameters, util
 ```python
 # %% Cell 3 - Train Model Fold 2
 print("=== Training Fold 2 ===")
-model2 = scad.Model3(
+model2 = SPAberrant.Model3(
     resolution="low",
     batch_size=200,
     train_epoch=3000,
@@ -166,7 +168,7 @@ Complete the cross-validation process by training the third fold with its respec
 ```python
 # %% Cell 4 - Train Model Fold 3
 print("=== Training Fold 3 ===")
-model3 = scad.Model3(
+model3 = SPAberrant.Model3(
     resolution="low",
     batch_size=200,
     train_epoch=3000,
@@ -209,13 +211,13 @@ Apply conformal prediction to each fold's validation and test sets to identify s
 print("=== Performing Conformal Prediction ===")
 true_coord = adata_ST.obsm['spatial']
 
-final_aberrant1, final_confidence1, final_lambda1, pred_coords1, _ = scad.conformal_prediction(
+final_aberrant1, final_confidence1, final_lambda1, pred_coords1, _ = SPAberrant.conformal_prediction(
     true_coord, z_B1, m_B1, val_idx1, test_idx1, alpha=0.05)
 
-final_aberrant2, final_confidence2, final_lambda2, pred_coords2, _ = scad.conformal_prediction(
+final_aberrant2, final_confidence2, final_lambda2, pred_coords2, _ = SPAberrant.conformal_prediction(
     true_coord, z_B2, m_B2, val_idx2, test_idx2, alpha=0.05)
 
-final_aberrant3, final_confidence3, final_lambda3, pred_coords3, _ = scad.conformal_prediction(
+final_aberrant3, final_confidence3, final_lambda3, pred_coords3, _ = SPAberrant.conformal_prediction(
     true_coord, z_B3, m_B3, val_idx3, test_idx3, alpha=0.05)
 
 # Aggregate results from three folds (summing yields final determination; 
@@ -274,11 +276,11 @@ We provide a comprehensive tutorial for benchmarking our method against baseline
 
 | File | Description |Instruction|
 | :--- | :--- |:--- |
-|[`MB_tutorial_TESLA.ipynb`](https://github.com/zhangzheng0131/SCAD/blob/main/compare_ipynb/MB_tutorial_TESLA.ipynb) ;[`MB_tutorial_SpaGCN.ipynb`](https://github.com/zhangzheng0131/SCAD/blob/main/compare_ipynb/MB_tutorial_SpaGCN.ipynb) ;[`simulation_SCAD.ipynb`](https://github.com/zhangzheng0131/SCAD/blob/main/compare_ipynb/simulation_SCAD.ipynb) | SCAD | The simulated data is generated from `simulation_SCAD.ipynb`|
-| [`simulation_CARD.ipynb`](https://github.com/zhangzheng0131/SCAD/blob/main/compare_ipynb/simulation_CARD.ipynb);[`metrics_CARD.ipynb`](https://github.com/zhangzheng0131/SCAD/blob/main/compare_ipynb/metrics_CARD.ipynb)| CARD |r based method|
-| [`simulation_Tangram.ipynb`](https://github.com/zhangzheng0131/SCAD/blob/main/compare_ipynb/simulation_Tangram.ipynb) | Tangram |python based method|
-| [`simulation_RCTD.ipynb`](https://github.com/zhangzheng0131/SCAD/blob/main/compare_ipynb/simulation_RCTD.ipynb) ;[`metrics_RCTD.ipynb`](https://github.com/zhangzheng0131/SCAD/blob/main/compare_ipynb/metrics_RCTD.ipynb)| RCTD |r based method|
-| [`simulation_IF.ipynb`](https://github.com/zhangzheng0131/SCAD/blob/main/compare_ipynb/simulation_IF.ipynb) | Isolation Forest |python code|
+|[`MB_tutorial_TESLA.ipynb`](https://github.com/zhangzheng0131/SPAberrant/blob/main/compare_ipynb/MB_tutorial_TESLA.ipynb) ;[`MB_tutorial_SpaGCN.ipynb`](https://github.com/zhangzheng0131/SPAberrant/blob/main/compare_ipynb/MB_tutorial_SpaGCN.ipynb) ;[`simulation_SPAberrant.ipynb`](https://github.com/zhangzheng0131/SPAberrant/blob/main/compare_ipynb/simulation_SPAberrant.ipynb) | SPAberrant | The simulated data is generated from `simulation_SPAberrant.ipynb`|
+| [`simulation_CARD.ipynb`](https://github.com/zhangzheng0131/SPAberrant/blob/main/compare_ipynb/simulation_CARD.ipynb);[`metrics_CARD.ipynb`](https://github.com/zhangzheng0131/SPAberrant/blob/main/compare_ipynb/metrics_CARD.ipynb)| CARD |r based method|
+| [`simulation_Tangram.ipynb`](https://github.com/zhangzheng0131/SPAberrant/blob/main/compare_ipynb/simulation_Tangram.ipynb) | Tangram |python based method|
+| [`simulation_RCTD.ipynb`](https://github.com/zhangzheng0131/SPAberrant/blob/main/compare_ipynb/simulation_RCTD.ipynb) ;[`metrics_RCTD.ipynb`](https://github.com/zhangzheng0131/SPAberrant/blob/main/compare_ipynb/metrics_RCTD.ipynb)| RCTD |r based method|
+| [`simulation_IF.ipynb`](https://github.com/zhangzheng0131/SPAberrant/blob/main/compare_ipynb/simulation_IF.ipynb) | Isolation Forest |python code|
 ---
 
 
